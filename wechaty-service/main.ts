@@ -19,6 +19,15 @@ import { PuppetWhatsapp } from '@juzi/wechaty-puppet-whatsapp'
 
 import qrcodeTerminal from 'qrcode-terminal'
 
+import {
+  memberJson,
+  messageJson,
+}                       from './schema.js'
+import {
+  upsertContact,
+  insertMessage
+}                       from './db.js'
+
 let onDuty = false
 
 function onScan (qrcode: string, status: ScanStatus) {
@@ -50,40 +59,40 @@ async function onMessage (this: Wechaty, msg: Message) {
   if (msg.text() === 'ding') {
     onDuty = !onDuty
     await msg.say('dong - onDuty: ' + onDuty)
+
+    if (onDuty) {
+      await updateMembers(this)
+    }
   }
 
-  if (msg.self()) {
-    return
+  if (onDuty) {
+    await insertMessage(messageJson(msg))
   }
-
-  lpm(msg)
 }
 
 async function onReady () {
   log.info('onReady', 'onReady() fired')
 }
 
-async function lpm (message: Message) {
-  log.info('StarterBot', 'lpm()', message)
-
-  if (!onDuty) {
-    log.info('StarterBot', 'lpm() no duty')
-    return
-  }
+async function updateMembers (wechaty: Wechaty) {
+  log.info('StarterBot', 'updateMembers()')
 
   try {
-    const room = await message.wechaty.Room.find({ topic: /LPM/i })
+    const room = await wechaty.Room.find({ topic: /LPM/i })
     if (room) {
       const members = await room.memberAll()
       log.info('StarterBot', 'onLogin() room.find() room.memberAll() %s', members.length)
-      const info = members.map(m => m.name()).join(', ')
-      await room.say('Bot just logged in, members: ' + info)
+
+      for (const member of members) {
+        await upsertContact(memberJson(member))
+      }
+
     } else {
       log.warn('StarterBot', 'onLogin() room.find() not found')
     }
   } catch (e) {
     log.error('StarterBot', 'onLogin() room.find() rejection: %s', e)
-  }  
+  }
 }
 
 async function main () {
@@ -91,7 +100,7 @@ async function main () {
     name: 'wechaty-service',
     puppet: new PuppetWhatsapp() as any,
   })
-  
+
   bot.on('scan',    onScan)
   bot.on('login',   onLogin)
   bot.on('logout',  onLogout)
@@ -104,7 +113,7 @@ async function main () {
   } catch (e) {
     log.error('StarterBot', e)
   }
-  
+
 }
 
 await main()

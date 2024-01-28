@@ -12,7 +12,7 @@ MONGO_URI = "mongodb+srv://lpm:<pwd>@<host>.mongodb.net/?retryWrites=true&w=majo
 ```
 3. Do sentiment analysis using langchain and OpenAI:
 ```
-python3 extract_information.py
+python3 sentiment.py
 
 ```
 
@@ -23,5 +23,5 @@ python3 load_data.py
 
 5. Extract from MongoDB:
 ```
-
+python3 extract_information.py
 ```

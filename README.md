@@ -12,6 +12,7 @@ Large People Model (LPM) is a communication tool agnostic community platform whi
 ## Contributors
 
 - Huan Li, [@huan](https://github.com/huan), author of [Wechaty](https://github.com/wechaty)
+- Sako, [@sakomws](https://github.com/sakomws), Platform Engineer @ Gladly.
 
 ## License
 

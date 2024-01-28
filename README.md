@@ -8,6 +8,7 @@ Large People Model (LPM) is a communication tool agnostic community platform whi
 
 [AGI House Hackerthlon](https://www.tinyurl.com/agihousemongodb)
 
+![alt text](./arch.png)
 
 ## Contributors
 - Natalie Pan, Founder of Facets.

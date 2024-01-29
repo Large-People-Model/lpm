@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb'
 
-import { MONGODB_URI } from './config.js'
+import { MONGO_URI } from './config.js'
 import type {
   messageJson,
   memberJson
@@ -8,7 +8,7 @@ import type {
 
 // The MongoClient is the object that references the connection to our
 // datastore (Atlas, for example)
-const client = new MongoClient(MONGODB_URI)
+const client = new MongoClient(MONGO_URI)
 
 // The connect() method does not attempt a connection; instead it instructs
 // the driver to connect using the settings provided when a connection

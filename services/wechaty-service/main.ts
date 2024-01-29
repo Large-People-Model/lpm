@@ -27,6 +27,7 @@ import {
   upsertContact,
   insertMessage
 }                       from './db.js'
+import { analyze } from './llm.js'
 
 let onDuty = false
 
@@ -66,7 +67,11 @@ async function onMessage (this: Wechaty, msg: Message) {
   }
 
   if (onDuty) {
-    await insertMessage(messageJson(msg))
+    // Convert message to json and add sentiment analysis
+    await insertMessage({
+      ...messageJson(msg),
+      ...await analyze(msg.text()),
+    })
   }
 }
 

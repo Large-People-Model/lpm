@@ -18,6 +18,9 @@ async function fileToGenerativePart(path: string) {
   }
 }
 
+/**
+ * See: https://ai.google.dev/tutorials/node_quickstart#generate-text-from-text-and-image-input
+ */
 export async function proGeminiV1(
   prompt: string,
   imagePaths: string[],

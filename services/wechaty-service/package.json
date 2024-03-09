@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/wechaty/getting-started#readme",
   "dependencies": {
+    "@google/generative-ai": "^0.2.1",
     "@juzi/wechaty-puppet-whatsapp": "^1.0.31",
     "dotenv": "^16.0.0",
     "mongodb": "^6.3.0",

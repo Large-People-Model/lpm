@@ -11,7 +11,14 @@ if (!OPENAI_API_KEY) {
 
 }
 
+const GEMINI_API_KEY=process.env['GEMINI_API_KEY'] || ''
+if (!GEMINI_API_KEY) {
+  throw new Error('GEMINI_API_KEY is not set')
+
+}
+
 export {
   MONGO_URI,
   OPENAI_API_KEY,
+  GEMINI_API_KEY,
 }
